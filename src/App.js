@@ -31,7 +31,7 @@ class App extends React.Component{
     const IMG = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_Location_IQ}&center=${que.data[0].lat},${que.data[0].lon}&zoom=13`;
     //use the GET command with axios inorder to grab the HTTP link. also sets this to que rather than to stack
     
-    let pic = await axios.get(IMG);
+    await axios.get(IMG);
     this.setState({pic: IMG});
     // console.log(que.data[0])
     } catch(error){
