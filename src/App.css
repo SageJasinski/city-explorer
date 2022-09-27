@@ -95,6 +95,7 @@ button:hover {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   color: #518a6e;
+  margin: 10px;
 }
 .map {
   margin: auto;
