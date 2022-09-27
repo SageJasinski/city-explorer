@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import './App.css'
+import './App.css';
+import Modal from 'react-bootstrap/Modal';
 
 class App extends React.Component{
 
@@ -11,11 +13,15 @@ class App extends React.Component{
     this.state={
       location: {},
       search: '',
-      pic: ''
+      pic: '',
+      anError: false,
+      message: '',
+      Show: true,
     }
   }
 
   async searchLocation(){
+    try{
     //API http we want to grab based on input
     const API = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_Location_IQ}&q=${this.state.search}&format=json`;
 
@@ -28,7 +34,14 @@ class App extends React.Component{
     let pic = await axios.get(IMG);
     this.setState({pic: IMG});
     // console.log(que.data[0])
-  }
+    } catch(error){
+      this.setState({error: true});
+      this.setState({message: error.message})
+    }
+  };
+
+  handleShow = () => this.setState({Show: true});
+  handleHide = () => this.setState({Show: false});
 
   render() {
     return(
@@ -53,14 +66,27 @@ class App extends React.Component{
         
         <Card>
           <Card.Body>
-            <img src={this.state.pic} alt={this.state.location.display_name} className="map">
-            </img>
+            <Card.Img src={this.state.pic} alt={this.state.location.display_name} className="map">
+            </Card.Img>
             <Card.Text>
             <p className="lat">Lat: {this.state.location.lat}</p>
             <p className="lon">Lon: {this.state.location.lon}</p>
             </Card.Text>
           </Card.Body>
         </Card>
+
+        {this.state.error &&
+        <Modal show={this.state.Show}>
+          <Modal.Dialog>
+            <Modal.Header closeButton onClick={this.handleHide}>
+              <Modal.Title>You seem to be lost</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {this.state.message}
+            </Modal.Body>
+        </Modal.Dialog>
+        </Modal>
+        }
       </>
 
 
