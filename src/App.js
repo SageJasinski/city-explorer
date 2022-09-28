@@ -30,20 +30,25 @@ class App extends React.Component{
     let que = await axios.get(API);
     this.setState({location:que.data[0]});
 
+    //render image section
     const IMG = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_Location_IQ}&center=${que.data[0].lat},${que.data[0].lon}&zoom=13`;
-    //use the GET command with axios inorder to grab the HTTP link. also sets this to que rather than to stack
 
+    //use the GET command with axios inorder to grab the HTTP link. also sets this to que rather than to stack
     await axios.get(IMG);
     this.setState({pic: IMG});
   
+    //wether section
 
-    const weth = `http://localhost:3002/seattle`;
+    //Seattle wether
+    const weather= `http://localhost:3002/seattle`;
 
-    const seatWether = await axios.get(weth);
+    const seatWether = await axios.get(weather);
+    console.log(seatWether.data.data);
+    this.setState({seattle:seatWether.data.data});
 
-    this.setState({seattle:seatWether.data});
+    //Paris weather
 
-    console.log(this.state.seattle);
+    // console.log(this.state.seattle);
   
 
     } catch(error){
@@ -65,6 +70,7 @@ class App extends React.Component{
   handleHide = () => this.setState({Show: false});
 
   render() {
+    console.log(this.state.seattle)
     return(
       //use a bootstrap form
 
@@ -90,11 +96,13 @@ class App extends React.Component{
           <Card.Body>
             <Card.Img src={this.state.pic} alt={this.state.location.display_name} className="map">
             </Card.Img>
-            <Card.Text>
-            <p className="lat">Lat: {this.state.location.lat}</p>
-            <p className="lon">Lon: {this.state.location.lon}</p>
-            {this.state.seattle.length > 0 && <p className="lat">{this.state.seattle}</p>}
+            <Card.Text className="lat">
+            Lat: {this.state.location.lat}
             </Card.Text>
+            <Card.Text className="lon">
+            Lon: {this.state.location.lon}
+            </Card.Text>
+            {this.state.seattle.length > 0 && <Card.Text className="lat"> The temp is: {this.state.seattle[0].temp}</Card.Text>}
           </Card.Body>
         </Card>
 
