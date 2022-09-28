@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import './App.css';
 import Modal from 'react-bootstrap/Modal';
+// import Forecast from "./forcast";
 
 class App extends React.Component{
 
@@ -17,6 +18,7 @@ class App extends React.Component{
       anError: false,
       message: '',
       Show: true,
+      seattle:[],
     }
   }
 
@@ -30,14 +32,33 @@ class App extends React.Component{
 
     const IMG = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_Location_IQ}&center=${que.data[0].lat},${que.data[0].lon}&zoom=13`;
     //use the GET command with axios inorder to grab the HTTP link. also sets this to que rather than to stack
-    
+
     await axios.get(IMG);
     this.setState({pic: IMG});
-    // console.log(que.data[0])
+  
+
+    const weth = `http://localhost:3002/seattle`;
+
+    const seatWether = await axios.get(weth);
+
+    this.setState({seattle:seatWether.data});
+
+    console.log(this.state.seattle);
+  
+
     } catch(error){
       this.setState({error: true});
-      this.setState({message: error.message})
+      this.setState({message: error.message});
     }
+  };
+
+  findWether = (event) => {
+
+    event.preventDefault();
+
+    this.setState({wether: !this.state.wether});
+
+    console.log(this.state.wether);
   };
 
   handleShow = () => this.setState({Show: true});
@@ -59,6 +80,7 @@ class App extends React.Component{
             }
               }>Explore</button>
 
+          <button onClick={this.findWether}></button>
           </Form.Group>
         </Form>
 
@@ -71,6 +93,7 @@ class App extends React.Component{
             <Card.Text>
             <p className="lat">Lat: {this.state.location.lat}</p>
             <p className="lon">Lon: {this.state.location.lon}</p>
+            {this.state.seattle.length > 0 && <p className="lat">{this.state.seattle}</p>}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -93,4 +116,5 @@ class App extends React.Component{
     );
   }
 }
+
 export default App;

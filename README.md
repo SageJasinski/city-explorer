@@ -19,9 +19,7 @@ uses locationIQ for the API
 
 ## Change Log
 
-
 ## Credit and Collaborations
-
 
 Name of feature: set up and app creation
 
