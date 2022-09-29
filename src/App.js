@@ -19,6 +19,7 @@ class App extends React.Component{
       message: '',
       Show: true,
       seattle:[],
+      weather: [],
     }
   }
 
@@ -43,12 +44,11 @@ class App extends React.Component{
     const weather= `http://localhost:3002/seattle`;
 
     const seatWether = await axios.get(weather);
-    console.log(seatWether.data.data);
+    // console.log(seatWether.data.data);
     this.setState({seattle:seatWether.data.data});
 
     //Paris weather
 
-    // console.log(this.state.seattle);
   
 
     } catch(error){
@@ -57,20 +57,26 @@ class App extends React.Component{
     }
   };
 
-  findWether = (event) => {
+  submission = async () => {
+    // event.preventDefault();
 
-    event.preventDefault();
+    try{
+      let path = `http://localhost:3002/weather`;
+      let respond = await axios.get(path, {
+        params: {
+          searchQuery: this.state.search,
+        }
+      });
+      this.setState({weather: respond.data});
+    }catch(err){console.error(err);}
+  }
 
-    this.setState({wether: !this.state.wether});
-
-    console.log(this.state.wether);
-  };
 
   handleShow = () => this.setState({Show: true});
   handleHide = () => this.setState({Show: false});
 
   render() {
-    console.log(this.state.seattle)
+    console.log(this.state.weather)
     return(
       //use a bootstrap form
 
@@ -83,10 +89,10 @@ class App extends React.Component{
             <button onClick={ event =>{
               event.preventDefault();
               this.searchLocation();
+              this.submission();
             }
               }>Explore</button>
 
-          <button onClick={this.findWether}></button>
           </Form.Group>
         </Form>
 
@@ -102,7 +108,9 @@ class App extends React.Component{
             <Card.Text className="lon">
             Lon: {this.state.location.lon}
             </Card.Text>
-            {this.state.seattle.length > 0 && <Card.Text className="lat"> The temp is: {this.state.seattle[0].temp}</Card.Text>}
+            {this.state.weather.length > 0 && <Card.Text className="lat"> The low for today is: {this.state.weather[0].low_temp}</Card.Text>}
+            {this.state.weather.length > 0 && <Card.Text className="lat"> The high for today is: {this.state.weather[0].high_temp}</Card.Text>}
+            {this.state.weather.length > 0 && <Card.Text className="lat">    with {this.state.weather[0].description}</Card.Text>}
           </Card.Body>
         </Card>
 
