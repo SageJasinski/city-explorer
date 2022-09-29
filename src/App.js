@@ -127,8 +127,6 @@ class App extends React.Component{
         </Modal>
         }
       </>
-
-
     );
   }
 }
