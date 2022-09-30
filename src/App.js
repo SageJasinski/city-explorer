@@ -62,7 +62,7 @@ class App extends React.Component{
     // event.preventDefault();
 
     try{
-      let path = `http://localhost:3004/weather`;
+      let path = `http://localhost:3002/weather`;
       let respond = await axios.get(path, {
         params: {
           searchQuery: this.state.search,
