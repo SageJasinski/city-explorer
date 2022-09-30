@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import './App.css';
 import Modal from 'react-bootstrap/Modal';
+import Content from "./Card";
 // import Forecast from "./forcast";
 
 class App extends React.Component{
@@ -97,22 +98,14 @@ class App extends React.Component{
         </Form>
 
         <h2 className="mainHead">{this.state.location.display_name}</h2>
-        
-        <Card>
-          <Card.Body>
-            <Card.Img src={this.state.pic} alt={this.state.location.display_name} className="map">
-            </Card.Img>
-            <Card.Text className="lat">
-            Lat: {this.state.location.lat}
-            </Card.Text>
-            <Card.Text className="lon">
-            Lon: {this.state.location.lon}
-            </Card.Text>
-            {this.state.weather.length > 0 && <Card.Text className="lat"> The low for today is: {this.state.weather[0].low_temp}</Card.Text>}
-            {this.state.weather.length > 0 && <Card.Text className="lat"> The high for today is: {this.state.weather[0].high_temp}</Card.Text>}
-            {this.state.weather.length > 0 && <Card.Text className="lat">    with {this.state.weather[0].description}</Card.Text>}
-          </Card.Body>
-        </Card>
+        <Content 
+        pic= {this.state.pic}
+        display_name = {this.state.display_name}
+        lat = {this.state.lat}
+        lon = {this.state.lon}
+        weather = {this.state.weather}
+        >
+        </Content>
 
         {this.state.error &&
         <Modal show={this.state.Show}>
