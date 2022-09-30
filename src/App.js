@@ -42,11 +42,11 @@ class App extends React.Component{
     //wether section
 
     //Seattle wether
-    const weather= `http://localhost:3002/seattle`;
+    // const weather= `http://localhost:3003/seattle`;
 
-    const seatWether = await axios.get(weather);
-    // console.log(seatWether.data.data);
-    this.setState({seattle:seatWether.data.data});
+    // const seatWether = await axios.get(weather);
+    // // console.log(seatWether.data.data);
+    // this.setState({seattle:seatWether.data.data});
 
     //Paris weather
 
@@ -62,7 +62,7 @@ class App extends React.Component{
     // event.preventDefault();
 
     try{
-      let path = `http://localhost:3002/weather`;
+      let path = `http://localhost:3004/weather`;
       let respond = await axios.get(path, {
         params: {
           searchQuery: this.state.search,

@@ -1,6 +1,5 @@
 import React from "react";
-import  Card from "react-bootstrap";
-import Component from "react";
+import  Card from "react-bootstrap/Card";
 
 class Content extends React.Component{
 
