@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 import './App.css';
 import Modal from 'react-bootstrap/Modal';
 import Content from "./Card";
@@ -31,7 +31,7 @@ class App extends React.Component{
 
     let que = await axios.get(API);
     this.setState({location:que.data[0]});
-
+      console.log(que.data[0])
     //render image section
     const IMG = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_Location_IQ}&center=${que.data[0].lat},${que.data[0].lon}&zoom=13`;
 
@@ -62,7 +62,7 @@ class App extends React.Component{
     // event.preventDefault();
 
     try{
-      let path = `http://localhost:3002/weather`;
+      let path = `http://localhost:3003/weather`;
       let respond = await axios.get(path, {
         params: {
           searchQuery: this.state.search,
@@ -77,7 +77,7 @@ class App extends React.Component{
   handleHide = () => this.setState({Show: false});
 
   render() {
-    console.log(this.state.weather)
+    // console.log(this.state.weather)
     return(
       //use a bootstrap form
 
@@ -101,8 +101,8 @@ class App extends React.Component{
         <Content 
         pic= {this.state.pic}
         display_name = {this.state.display_name}
-        lat = {this.state.lat}
-        lon = {this.state.lon}
+        lat = {this.state.location.lat}
+        lon = {this.state.location.lon}
         weather = {this.state.weather}
         >
         </Content>
